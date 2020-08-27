@@ -11,5 +11,5 @@ Rails.application.routes.draw do
     registrations: 'registrations'
   }
 
-  resources :requests, only: [:index]
+  resources :requests, only: [:index, :create]
 end
