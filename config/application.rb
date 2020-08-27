@@ -39,7 +39,7 @@ module AlliotApi
         origins '*'
         resource(
           '*',
-          headers: :any,
+          headers: ["Authorization"],
           expose: ["Authorization"],
           methods: [:get, :patch, :put, :delete, :post, :options, :show]
         )
