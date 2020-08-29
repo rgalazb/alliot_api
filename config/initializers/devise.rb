@@ -311,9 +311,12 @@ Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = ENV['DEVISE_SECRET_KEY']
     jwt.dispatch_requests = [
-        ['POST', %r{^/login$}]
+        # rutas que pueden generan tokens
+        ['POST', %r{^/login$}],
+        ['POST', %r{^/signup$}]
       ]
       jwt.revocation_requests = [
+        # rutas que dejan de hacer valido un token
         ['DELETE', %r{^/logout$}]
       ]
     jwt.expiration_time = 20.minutes.to_i

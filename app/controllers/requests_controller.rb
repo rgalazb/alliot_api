@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    requests = Request.preload(:user, :comments, comments: [:user])
+    requests = Request.preload(:user, :comments, :reactions, comments: [:user])
     response = requests.map do |r|
       set_response r
     end
@@ -30,6 +30,8 @@ class RequestsController < ApplicationController
         id: request.id,
         title: request.title,
         description: request.description,
+        likes: request.reactions.select {|r| r.like?}.count,
+        dislikes: request.reactions.select {|r| r.dislike?}.count,
         author: request.user.email,
         comments: request.comments.map {|c| {id: c.id, author: c.user.email, content: c.content}}
       }
