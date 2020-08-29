@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_031649) do
+ActiveRecord::Schema.define(version: 2020_08_29_033138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 2020_08_27_031649) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["jti"], name: "index_jwt_blacklists_on_jti"
+  end
+
+  create_table "reactions", force: :cascade do |t|
+    t.integer "kind"
+    t.bigint "request_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["request_id"], name: "index_reactions_on_request_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -56,5 +66,7 @@ ActiveRecord::Schema.define(version: 2020_08_27_031649) do
 
   add_foreign_key "comments", "requests"
   add_foreign_key "comments", "users"
+  add_foreign_key "reactions", "requests"
+  add_foreign_key "reactions", "users"
   add_foreign_key "requests", "users"
 end
